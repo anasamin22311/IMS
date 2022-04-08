@@ -28,7 +28,7 @@ builder.Services.AddDbContext<IMSContext>(options =>
     options.UseInMemoryDatabase("IMS");
 });
 //DI Repositories
-builder.Services.AddTransient<IInventoryRepository, IInventoryRepository>();
+builder.Services.AddTransient<IInventoryRepository, InventoryRepository>();
 //DI Use cases
 builder.Services.AddTransient<IViewInventoryByNameUseCase, ViewInventoryByNameUseCase>();
 var app = builder.Build();
