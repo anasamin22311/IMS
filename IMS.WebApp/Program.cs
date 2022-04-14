@@ -30,7 +30,10 @@ builder.Services.AddDbContext<IMSContext>(options =>
 //DI Repositories
 builder.Services.AddTransient<IInventoryRepository, InventoryRepository>();
 //DI Use cases
+builder.Services.AddTransient<IAddInventoryUseCase, AddInventoryUseCase>();
 builder.Services.AddTransient<IViewInventoryByNameUseCase, ViewInventoryByNameUseCase>();
+builder.Services.AddTransient<IEditInventoriesUseCase, EditInventoriesUseCase>();
+builder.Services.AddTransient<IViewInventoryByIdUseCase,ViewInventoryByIdUseCase>();
 var app = builder.Build();
 var scope = app.Services.CreateScope();
 var IMSContext = scope.ServiceProvider.GetRequiredService<IMSContext>();

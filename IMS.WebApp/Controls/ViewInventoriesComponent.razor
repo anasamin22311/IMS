@@ -1,0 +1,17 @@
+﻿@using IMS.CoreBusiness
+@inject IViewInventoryByNameUseCase ViewInventoryByNameUseCase
+<div class ="input-group mb-3">
+    <input type = "text" class ="form-control form-control-lg" placeholder="Type inventory here to search" @bind-value = "inventoryNameToSearch" />
+    <button type ="button" class = "input-group-text btn-success" @onclick="@(async()=>{await ViewInventories();})" >View</button>
+</div>
+@code {
+    private string? inventoryNameToSearch;
+    [Parameter]
+    public EventCallback<List<Inventory>> onSearchInventories{ get; set; }
+    private List<Inventory>? inventories;
+    private async Task ViewInventories()
+    {
+        var inventories = (await ViewInventoryByNameUseCase.ExcuteAsync(inventoryNameToSearch??string.Empty))?.ToList();
+        await onSearchInventories.InvokeAsync(inventories);
+    }
+}
