@@ -1,5 +1,6 @@
-﻿@page "/editinventory"
+﻿@page "/editinventory/{invId:int}"
 <h3>Edit Inventory</h3>
+@inject NavigationManager NavigationManager
 @inject IViewInventoryByIdUseCase ViewInventoryByIdUseCase
 @inject IEditInventoriesUseCase EditInventoriesUseCase
 @if (this.inventory != null)
@@ -36,7 +37,10 @@
     public async Task OnValidSubmit()
     {
         if (this.inventory != null)
-        await EditInventoriesUseCase.ExcuteAsync(this.inventory);
+        {
+            await EditInventoriesUseCase.ExcuteAsync(this.inventory);
+            NavigationManager.NavigateTo("/inventories");
+        }
     }
 }
 
