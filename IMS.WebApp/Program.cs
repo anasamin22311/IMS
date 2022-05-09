@@ -1,6 +1,7 @@
 using IMS.Plugins.EFCore;
 using IMS.UseCases;
 using IMS.UseCases.pluginInterfaces;
+using IMS.UseCases.PluginInterfaces;
 using IMS.WebApp.Areas.Identity;
 using IMS.WebApp.Data;
 using Microsoft.AspNetCore.Components;
@@ -29,11 +30,16 @@ builder.Services.AddDbContext<IMSContext>(options =>
 });
 //DI Repositories
 builder.Services.AddTransient<IInventoryRepository, InventoryRepository>();
+builder.Services.AddTransient<IProductRepository,ProductRepository>();
+
 //DI Use cases
 builder.Services.AddTransient<IAddInventoryUseCase, AddInventoryUseCase>();
 builder.Services.AddTransient<IViewInventoryByNameUseCase, ViewInventoryByNameUseCase>();
 builder.Services.AddTransient<IEditInventoriesUseCase, EditInventoriesUseCase>();
 builder.Services.AddTransient<IViewInventoryByIdUseCase,ViewInventoryByIdUseCase>();
+builder.Services.AddTransient<IViewProductsByNameUseCase,ViewProductsByNameUseCase>();
+builder.Services.AddTransient<IAddProductUseCase, AddProductUseCase>();
+builder.Services.AddTransient<IViewProducByIdUseCase, ViewProducByIdUseCase>();
 var app = builder.Build();
 var scope = app.Services.CreateScope();
 var IMSContext = scope.ServiceProvider.GetRequiredService<IMSContext>();

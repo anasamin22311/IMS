@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Content Remove="Pages\EditForm.razor" />
+    <Content Remove="Pages\EditProduct.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,14 +27,19 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Pages\EditForm.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Pages\EditForm.razor" />
+    <_ContentIncludedByDefault Remove="Pages\EditProduct.razor" />
   </ItemGroup>
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Pages\EditForm.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\EditProduct.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\EditProduct.razor" />
   </ItemGroup>
 
 </Project>

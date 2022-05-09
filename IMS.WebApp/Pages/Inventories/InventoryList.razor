@@ -2,9 +2,10 @@
 @inject NavigationManager NavigationManager 
 @inject IViewInventoryByNameUseCase ViewInventoryByNameUseCase
 
-<h3>InventoryList</h3>
+<h3>Inventory List</h3>
 <br />
-<ViewInventoriesComponent onSearchInventories = "onSearchInventories"></ViewInventoriesComponent>
+<ViewInventoriesComponent onSearchInventories = "onSearchInventories"
+DisplaySearchResult = "true"></ViewInventoriesComponent>
 @if (listInventories != null)
 {
     <table class ="table">
@@ -18,18 +19,12 @@
         <tbody>
             @foreach(var inv in this.listInventories)
             {
-                <tr>
-                    <td>@inv.InventoryName</td>
-                    <td>@inv.Quantity</td>
-                    <td>@inv.Price.ToString("c")</td>
-                    <td>
-                        <button type = "button" class = "btn btn-light" @onclick = "@(()=> EditInventory(inv.InventoryId))">Edit</button>
-                    </td>
-                </tr>
+                <InventoryItemComponent Inventory ="inv" ></InventoryItemComponent>
             }
         </tbody>
     </table>
 }
+<br/>
 <button type = "button" class = "btn btn-primary" @onclick = "AddInventory"> Add Inventory</button>
 @code 
 {
@@ -47,8 +42,7 @@
     {
         NavigationManager.NavigateTo("/addinventory");
     }
-    public void EditInventory(int InvId)
+    private void OnSelectInventory(Inventory inventory)
     {
-        NavigationManager.NavigateTo($"/editinventory/{InvId}");
     }
 }

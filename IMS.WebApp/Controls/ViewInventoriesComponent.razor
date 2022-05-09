@@ -1,17 +1,41 @@
 ﻿@using IMS.CoreBusiness
 @inject IViewInventoryByNameUseCase ViewInventoryByNameUseCase
-<div class ="input-group mb-3">
-    <input type = "text" class ="form-control form-control-lg" placeholder="Type inventory here to search" @bind-value = "inventoryNameToSearch" />
-    <button type ="button" class = "input-group-text btn-success" @onclick="@(async()=>{await ViewInventories();})" >View</button>
+<div class="input-group">
+    <input type="text" class="form-control form-control-lg" placeholder="Type inventory here to search" @bind-value="inventoryNameToSearch" />
+    <button type="button" class="input-group-text btn-success" @onclick="@(async()=>{await ViewInventories();})">View</button>
 </div>
+@if (this.DisplaySearchResult && _inventories != null && SelectedInventory==null)
+{
+    <div style="overflow-y:auto; max-height:300px; border : 1px solid silver">
+        <ul style="list-style-type:none">
+            @foreach (var inv in _inventories)
+            {
+                <li style="cursor:pointer" @onclick="@(async()=>{await SelectInventory(inv);})"
+            @key="inv.InventoryId">@inv.InventoryName </li>
+            }
+        </ul>
+    </div>
+}
 @code {
     private string? inventoryNameToSearch;
+    private List<Inventory>? _inventories;
+    private Inventory? SelectedInventory;
     [Parameter]
-    public EventCallback<List<Inventory>> onSearchInventories{ get; set; }
-    private List<Inventory>? inventories;
+    public EventCallback<List<Inventory>> onSearchInventories { get; set; }
+    [Parameter]
+    public EventCallback<Inventory> OnSelectInventory { get; set; }
+    [Parameter]
+    public bool DisplaySearchResult { get; set; }
     private async Task ViewInventories()
     {
-        var inventories = (await ViewInventoryByNameUseCase.ExcuteAsync(inventoryNameToSearch??string.Empty))?.ToList();
+        var inventories = (await ViewInventoryByNameUseCase.ExcuteAsync(inventoryNameToSearch ?? string.Empty))?.ToList();
         await onSearchInventories.InvokeAsync(inventories);
+        _inventories = inventories;
+        this.SelectedInventory = null;
+    }
+    private async Task SelectInventory(Inventory inventory)
+    {
+        await OnSelectInventory.InvokeAsync(inventory);
+        SelectedInventory = inventory;
     }
 }
